@@ -14,32 +14,126 @@ const render = require("./lib/htmlRenderer");
 // and to create objects for each team member (using the correct classes as blueprints!)
 inquirer.prompt([
     {
-        name: "name",
+        name: "managerName",
         type: "input",
-        message: "What is your name?",
+        message: "What is your manager's name?",
     },
     {
-        name: "id",
+        name: "managerId",
         type: "input",
-        message: "What is your employee id?",
+        message: "What is your manager's id?",
     },
     {
-        name: "email",
+        name: "managerEmail",
         type: "input",
-        message: "What is your email address?",
+        message: "What is your manager's email address?",
     },
     {
-        name: "role",
-        type: "list",
-        message: "Choose the type of employee to add:",
-        choices: ["Manager", "Engineer", "Intern"],
+        name: "officeNumber",
+        type: "input",
+        message: "What is your manager's office number?",
     },
 
 ]).then((answer) => {
-    console.log(answer.name, answer.email);
-    
+    console.log(answer.managerName);
+    const manager = new Manager(
+        answer.managerName,
+        answer.managerId,
+        answer.managerEmail,
+        answer.officeNumber
+    );
+    console.log(`${answer.managerName} has been added.`);
+    teamHTML.push(manager);
+    nextMember();
 });
+function nextMember() {
+    inquirer.prompt([
+        {
+          name: "newRole",
+          type: "list",
+          message: "Choose the next member of your team:",
+          choices: ["Add an Engineer", "Add an Intern", "My team is complete"],
+        },
+    ]).then(function (answer) {
+        if (answer.choice === "Add an Engineer") {
+            addEngineer();
+        } else if (answer.choice === "Add an Intern") {
+            addIntern();
+        } else (render());
+    });
+};
 
+function addEngineer(){
+    inquirer.prompt([
+        {
+            name: "engineerName",
+            type: "input",
+            message: "Enter the engineer's name."
+        },
+        {
+            name: "engineerId",
+            type: "input",
+            message: "Enter the engineer's id."
+        },
+        {
+            name: "engineerEmail",
+            type: "input",
+            message: "Enter the engineer's email address."
+        },
+        {
+            name: "engineerGithub",
+            type: "input",
+            message: "Enter the engineer's GitHub username."
+        },
+    ]).then((answer) => {
+            console.log(answer.engineerName);
+            const engineer = new Engineer(
+                answer.engineerName,
+                answer.engineerId,
+                answer.engineerEmail,
+                answer.engineerGithub
+            );
+            console.log(`${answer.engineerName} has been added.`);
+            teamHTML.push(engineer);
+            nextMember();
+    })
+}
+
+function addIntern(){
+    inquirer.prompt([
+        {
+            name: "internName",
+            type: "input",
+            message: "Enter the intern's name."
+        },
+        {
+            name: "internId",
+            type: "input",
+            message: "Enter the intern's id."
+        },
+        {
+            name: "internEmail",
+            type: "input",
+            message: "Enter the intern's email address."
+        },
+        {
+            name: "internSchool",
+            type: "input",
+            message: "Enter the intern's school name."
+        },
+    ]).then((answer) => {
+            console.log(answer.internName);
+            const intern = new Intern (
+                answer.internName,
+                answer.internId,
+                answer.internEmail,
+                answer.internSchool
+            );
+            console.log(`${answer.internName} has been added.`);
+            teamHTML.push(intern);
+            nextMember();
+    })
+}
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
