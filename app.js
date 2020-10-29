@@ -9,7 +9,7 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
-const newTeam = [];
+const employees = [];
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
@@ -44,26 +44,9 @@ inquirer.prompt([
         answer.officeNumber
     );
     console.log(`${answer.managerName} has been added.`);
-    newTeam.push(manager);
+    employees.push(manager);
     nextMember();
 });
-function nextMember() {
-    inquirer.prompt([
-        {
-          name: "newRole",
-          type: "list",
-          message: "Choose the next member of your team:",
-          choices: ["Add an Engineer", "Add an Intern", "My team is complete"],
-        },
-    ]).then(function (answer) {
-        if (answer.choice === "Add an Engineer") {
-            addEngineer();
-        } else if (answer.choice === "Add an Intern") {
-            addIntern();
-        } else (render());
-    });
-};
-
 function addEngineer(){
     inquirer.prompt([
         {
@@ -94,11 +77,10 @@ function addEngineer(){
                 answer.github
             );
             console.log(`${answer.engineerName} has been added.`);
-            newTeam.push(engineer);
+            employees.push(engineer);
             nextMember();
     });
 };
-
 function addIntern(){
     inquirer.prompt([
         {
@@ -130,10 +112,99 @@ function addIntern(){
                 answer.school
             );
             console.log(`${answer.internName} has been added.`);
-            newTeam.push(intern);
+            employees.push(intern);
             nextMember();
     });
 };
+function nextMember() {
+    inquirer.prompt([
+        {
+          name: "newRole",
+          type: "list",
+          message: "Choose the next member of your team:",
+          choices: ["Add an Engineer", "Add an Intern", "My team is complete"],
+        },
+    ]).then(function (answer) {
+        if (answer.newRole === "Add an Engineer") {
+            addEngineer();
+        } else if (answer.newRole === "Add an Intern") {
+            addIntern();
+        } else {
+            render;
+        };
+    });
+};
+
+// function addEngineer(){
+//     inquirer.prompt([
+//         {
+//             name: "engineerName",
+//             type: "input",
+//             message: "Enter the engineer's name."
+//         },
+//         {
+//             name: "engineerId",
+//             type: "input",
+//             message: "Enter the engineer's id."
+//         },
+//         {
+//             name: "engineerEmail",
+//             type: "input",
+//             message: "Enter the engineer's email address."
+//         },
+//         {
+//             name: "github",
+//             type: "input",
+//             message: "Enter the engineer's GitHub username."
+//         },
+//     ]).then((answer) => {
+//             const engineer = new Engineer(
+//                 answer.engineerName,
+//                 answer.engineerId,
+//                 answer.engineerEmail,
+//                 answer.github
+//             );
+//             console.log(`${answer.engineerName} has been added.`);
+//             employees.push(engineer);
+//             nextMember();
+//     });
+// };
+
+// function addIntern(){
+//     inquirer.prompt([
+//         {
+//             name: "internName",
+//             type: "input",
+//             message: "Enter the intern's name."
+//         },
+//         {
+//             name: "internId",
+//             type: "input",
+//             message: "Enter the intern's id."
+//         },
+//         {
+//             name: "internEmail",
+//             type: "input",
+//             message: "Enter the intern's email address."
+//         },
+//         {
+//             name: "school",
+//             type: "input",
+//             message: "Enter the name of the intern's school."
+//         },
+//     ]).then((answer) => {
+//             console.log(answer.internName);
+//             const intern = new Intern (
+//                 answer.internName,
+//                 answer.internId,
+//                 answer.internEmail,
+//                 answer.school
+//             );
+//             console.log(`${answer.internName} has been added.`);
+//             employees.push(intern);
+//             nextMember();
+//     });
+// };
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
