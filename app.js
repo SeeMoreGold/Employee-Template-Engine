@@ -82,7 +82,7 @@ function addEngineer(){
             message: "Enter the engineer's email address."
         },
         {
-            name: "engineerGithub",
+            name: "github",
             type: "input",
             message: "Enter the engineer's GitHub username."
         },
@@ -91,7 +91,7 @@ function addEngineer(){
                 answer.engineerName,
                 answer.engineerId,
                 answer.engineerEmail,
-                answer.engineerGithub
+                answer.github
             );
             console.log(`${answer.engineerName} has been added.`);
             newTeam.push(engineer);
