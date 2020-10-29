@@ -9,6 +9,7 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
+const newTeam = [];
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
@@ -43,7 +44,7 @@ inquirer.prompt([
         answer.officeNumber
     );
     console.log(`${answer.managerName} has been added.`);
-    teamHTML.push(manager);
+    newTeam.push(manager);
     nextMember();
 });
 function nextMember() {
@@ -86,7 +87,6 @@ function addEngineer(){
             message: "Enter the engineer's GitHub username."
         },
     ]).then((answer) => {
-            console.log(answer.engineerName);
             const engineer = new Engineer(
                 answer.engineerName,
                 answer.engineerId,
@@ -94,10 +94,10 @@ function addEngineer(){
                 answer.engineerGithub
             );
             console.log(`${answer.engineerName} has been added.`);
-            teamHTML.push(engineer);
+            newTeam.push(engineer);
             nextMember();
-    })
-}
+    });
+};
 
 function addIntern(){
     inquirer.prompt([
@@ -117,9 +117,9 @@ function addIntern(){
             message: "Enter the intern's email address."
         },
         {
-            name: "internSchool",
+            name: "school",
             type: "input",
-            message: "Enter the intern's school name."
+            message: "Enter the name of the intern's school."
         },
     ]).then((answer) => {
             console.log(answer.internName);
@@ -127,13 +127,13 @@ function addIntern(){
                 answer.internName,
                 answer.internId,
                 answer.internEmail,
-                answer.internSchool
+                answer.school
             );
             console.log(`${answer.internName} has been added.`);
-            teamHTML.push(intern);
+            newTeam.push(intern);
             nextMember();
-    })
-}
+    });
+};
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
