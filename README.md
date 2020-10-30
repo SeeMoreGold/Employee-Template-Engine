@@ -7,7 +7,9 @@ A command-line application that generates an html file displaying members of a t
 
 * [GitHub Repo](https://github.com/SeeMoreGold/Employee-Template-Engine)
 
-* [Video Link](https://youtu.be/wdpdKnIb04w)
+* [Video Link](https://youtu.be/Wx26AAJiTI0)
+
+* [Screen-Shot](/images/screenshot.png)
 
 
 ## Table of Contents
