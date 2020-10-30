@@ -8,31 +8,30 @@ const fs = require("fs");
 const OUTPUT_DIR = path.resolve(__dirname, "./output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
-const render = require("./lib/htmlRenderer");
+const myRender = require("./lib/htmlRenderer");
 const employees = [];
 
-// Write code to use inquirer to gather information about the development team members,
-// and to create objects for each team member (using the correct classes as blueprints!)
+console.log("Let's build a Team!!!!!");
 inquirer.prompt([
     {
         name: "managerName",
         type: "input",
-        message: "What is your manager's name?",
+        message: "What is the manager's name?",
     },
     {
         name: "managerId",
         type: "input",
-        message: "What is your manager's id?",
+        message: "What is the manager's id?",
     },
     {
         name: "managerEmail",
         type: "input",
-        message: "What is your manager's email address?",
+        message: "What is the manager's email address?",
     },
     {
         name: "officeNumber",
         type: "input",
-        message: "What is your manager's office number?",
+        message: "What is the manager's office number?",
     },
 
 ]).then((answer) => {
@@ -90,20 +89,19 @@ function addIntern(){
         {
             name: "internId",
             type: "input",
-            message: "Enter the intern's id."
+            message: "Enter the intern's id: "
         },
         {
             name: "internEmail",
             type: "input",
-            message: "Enter the intern's email address."
+            message: "Enter the intern's email address: "
         },
         {
             name: "school",
             type: "input",
-            message: "Enter the name of the intern's school."
+            message: "Enter the name of the intern's school: "
         },
     ]).then((answer) => {
-            console.log(answer.internName);
             const intern = new Intern (
                 answer.internName,
                 answer.internId,
@@ -129,10 +127,11 @@ function nextMember() {
         } else if (answer.newRole === "Add an Intern") {
             addIntern();
         } else {
-            render;
-            fs.writeFileSync(outputPath);
-            // fs.appendFileSync(outputPath, html);
+           
+            fs.writeFileSync(outputPath, myRender(employees));
+            
             console.log('Team saved!');
+           
             
             };
         });
